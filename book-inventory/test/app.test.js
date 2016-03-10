@@ -1,6 +1,7 @@
-var app = require('../app.js');
 var assert = require('assert');
 var request = require('supertest');
+var repo = require('./mockRepo.js');
+var app = require('../app.js')(repo);
 
 describe('Book inventory', function() {
    it('allows to stock up the items', function (done) {
