@@ -2,47 +2,32 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
+function logRequests (req, res, next) {
+  console.log(`incoming request at ${new Date()}`);
+  next();
+}
+
+function clientErrorHandler(req, res, next) {
+  res.status(404).send('Sorry cant find that!');
+}
+
+function serverErrorHandler(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+}
+
 module.exports = function(stockRepo) {
+  var routes = require('./routes')(stockRepo);
   app.use(bodyParser.json());
 
-  app.use((req, res, next) =>{
-    console.log(`incoming request at ${new Date()}`);
-    next();
-  });
+  app.use(logRequests);
 
-  app.get('/stock', (req, res, next) => {
-      stockRepo.findAll()
-        .then((items) => res.send(items))
-        .catch(next);
-  });
+  app.get('/stock', routes.findAll);
+  app.post('/stock', routes.stockUp);
+  app.get('/stock/:isbn', routes.getCount);
 
-  app.post('/stock', (req, res) => {
-    var book = req.body;
-    console.log('isbn:', book.isbn);
+  app.use(serverErrorHandler);
+  app.use(clientErrorHandler);
 
-    stockRepo.stockUp(book.isbn, book.count)
-      .then(() => res.send(book));
-  });
-
-  app.get('/stock/:isbn', (req, res, next) => {
-      stockRepo.getCount(req.params.isbn)
-        .then((count) => {
-          if(count === null) {
-            res.status(404).send("not found");
-          } else {
-            res.send({count : count});
-          }
-        })
-        .catch(next);
-  });
-
-  app.use(function(err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-  });
-
-  app.use(function(req, res, next) {
-    res.status(404).send('Sorry cant find that!');
-  });
   return app;
 };
