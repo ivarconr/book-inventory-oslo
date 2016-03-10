@@ -1,9 +1,13 @@
-var http = require('http');
+var express = require('express');
+var app = express();
 
-var server = http.createServer(function(req, res) {
-  res.end('hello world');
+app.use((req, res, next) =>{
+  console.log(`incoming request at ${new Date()}`);
+  next();
 });
 
-server.listen(3000, function() {
-  console.log('listen on http://localhost:3000');
+app.get('/', (req, res) => {
+  res.send('Hello World!');
 });
+
+app.listen(3000, () => console.log('Example app listening on http://localhost:3000!'));
