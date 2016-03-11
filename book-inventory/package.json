@@ -6,11 +6,13 @@
   "scripts": {
     "start": "nodemon index.js",
     "test": "mocha",
-    "lint": "jshint --exclude=node_modules/** **.js"
+    "lint": "jshint --exclude=node_modules/** **.js",
+    "eslint": "eslint --ignore-path=node_modules **.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^2.3.0",
     "jshint": "^2.9.1",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
