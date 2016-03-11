@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-function logRequests (req, res) {
+function logRequests (req, res, next) {
   console.log(`incoming request at ${new Date()}`);
   next();
 }
