@@ -28,4 +28,8 @@
    "engines": {
     "node": "5.8.0"
   },
+   "repository": {
+    "type": "git",
+    "url": "https://git.heroku.com/book-inventory-oslo.git"
+  },
 }
