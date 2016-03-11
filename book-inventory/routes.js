@@ -25,5 +25,5 @@ module.exports = function(stockRepo) {
             })
             .catch(next);
       }
-    }
-}
+    };
+};

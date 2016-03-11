@@ -17,17 +17,17 @@ function stockUp(isbn, count) {
 
 function findAll() {
   return collectionPromise
-    .then((collection) => collection.find({}).toArray())
+    .then((collection) => collection.find({}).toArray());
 }
 
 function getCount(isbn) {
   return collectionPromise
     .then((collection) => collection.find({isbn: isbn}).limit(1).next()
-    .then((item) => item ? item.count : null))
+    .then((item) => item ? item.count : null));
 }
 
 module.exports = {
   stockUp: stockUp,
   findAll: findAll,
   getCount: getCount
-}
+};
