@@ -35,5 +35,5 @@ module.exports = {
     quantity: 1,
     size: 'Free'
   }],
-  log_drains: []
+  log_drains: ['syslog://data.logentries.com:13636']
 };
