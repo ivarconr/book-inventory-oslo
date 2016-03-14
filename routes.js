@@ -15,6 +15,9 @@ module.exports = function(stockRepo) {
     },
 
     getCount: (req, res, next) => {
+      var traceId = req.headers['x-request-id'] || '123';
+      console.log(`Got request from traceId=${traceId}`);
+
       stockRepo.getCount(req.params.isbn)
         .then((count) => {
           if (count === null) {
@@ -22,7 +25,7 @@ module.exports = function(stockRepo) {
           } else {
             res.format({
               'text/plain': function() {
-                res.send('count');
+                res.send(count);
               },
 
               'text/html': function() {
